@@ -140,3 +140,26 @@ const transactionTrigger = (uid: string, amount: number): { status: number, text
   }
 
   const senderToken = sender
+
+
+  //Пару новых функций (Инфо о пользователе и изменение данных)
+
+  
+  const getUserInfo = (userId: string): User | null => {
+  const user = users.find((u) => u.id === userId);
+  if (!user) {
+    return null;
+  }
+  return { ...user };
+};
+
+  const updateUserInfo = (userId: string, updates: Partial<User>): { status: number, text: string, message: string } => {
+  const user = users.find((u) => u.id === userId);
+  if (!user) {
+    return { status: 404, text: 'Not Found', message: 'Пользователь не найден' };
+  }
+
+  Object.assign(user, updates);
+
+  return { status: 200, text: 'OK', message: 'Информация о пользователе обновлена' };
+};
